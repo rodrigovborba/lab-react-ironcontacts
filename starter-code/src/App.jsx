@@ -7,9 +7,7 @@ class App extends Component {
     super(props);
     this.state = {
       // Property to get 5 contacts
-      contacts: contacts.slice(0, 5),
-      // Property to store the contacts
-      storedContacts: contacts.slice(5)
+      contacts: contacts.slice(0, 5)
     };
     this.addRandomContact = this.addRandomContact.bind(this);
     this.sortByName = this.sortByName.bind(this);
@@ -17,19 +15,15 @@ class App extends Component {
     this.deleteContact = this.deleteContact.bind(this);
   }
 
-  addRandomContact = () => {
-    // To get the contacts ramdomly inside my array.
-    let random = Math.floor(Math.random() * (contacts.length - 1 - 5)) + 5;
-    const newStoredContacts = this.state.storedContacts.splice(random, 1);
-    const newArrContacts = [...this.state.contacts, contacts[random]];
-
+  addRandomContact() {
+    const randomContact = contacts[Math.floor(Math.random() * contacts.length)];
+    const newContactList = [...this.state.contacts, randomContact];
     this.setState({
-      contacts: newArrContacts,
-      storedContacts: newStoredContacts
+      contacts: newContactList
     });
-  };
+  }
 
-  sortByName = () => {
+  sortByName() {
     const newArrContacts = [...this.state.contacts];
     newArrContacts.sort(function(a, b) {
       if (a.name > b.name) {
@@ -43,9 +37,9 @@ class App extends Component {
     this.setState({
       contacts: newArrContacts
     });
-  };
+  }
 
-  sortByPopularity = () => {
+  sortByPopularity() {
     const newArrContacts = [...this.state.contacts];
     newArrContacts.sort(function(a, b) {
       if (a.popularity > b.popularity) {
@@ -59,16 +53,16 @@ class App extends Component {
     this.setState({
       contacts: newArrContacts
     });
-  };
+  }
 
-  deleteContact = contact => {
+  deleteContact(contact) {
     // I need to splice the contact to the array contacts
     const newArrContacts = [...this.state.contacts];
     newArrContacts.splice(contact, 1);
     this.setState({
       contacts: newArrContacts
     });
-  };
+  }
 
   render() {
     return (
@@ -96,9 +90,9 @@ class App extends Component {
               <th scope="col">#</th>
             </tr>
           </thead>
-          <tbody className="align-self-center">
-            {this.state.contacts.map((contact, i) => (
-              <tr key={i}>
+          <tbody className="scale align-self-center">
+            {this.state.contacts.map((contact, index) => (
+              <tr key={index}>
                 <td>
                   <img className="image" src={contact.pictureUrl} />
                 </td>
@@ -108,7 +102,7 @@ class App extends Component {
                 <td>
                   <button
                     className="btn btn-light"
-                    onClick={() => this.deleteContact(i)}
+                    onClick={() => this.deleteContact(index)}
                   >
                     Delete
                   </button>
